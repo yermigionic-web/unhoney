@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050507" />
+  <meta name="description" content="언더그라운드 허니 — 범죄자를 연애로 개심시키는 2035년의 블랙 코미디 리얼리티." />
+  <title>UNDERGROUND HONEY｜언더그라운드 허니</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Syne:wght@500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+/* =========================================================
+   UNDERGROUND HONEY — Design System
+   ---------------------------------------------------------
+   Why these choices:
+   - Magenta = desire / danger / “honey” drip (logo language)
+   - Silver/chrome = underground luxury, chains, dog tags
+   - Near-black void = Black Hive night, surveillance feed
+   - Syne = sharp broadcast titles (not Inter/Roboto)
+   - JetBrains Mono = classified dossier / CCTV timestamps
+   - Noto Sans KR = readable Korean body without fighting the brand
+   ========================================================= */
+
+:root {
+  --void: #050507;
+  --ink: #0c0c10;
+  --panel: #121218;
+  --panel-2: #1a1a22;
+  --silver: #c8c8d0;
+  --silver-bright: #ececf2;
+  --white: #f7f7fa;
+  --magenta: #e91e8c;
+  --magenta-hot: #ff3dab;
+  --magenta-dim: #9a145c;
+  --danger: #ff4d6d;
+  --muted: #7a7a88;
+  --line: rgba(200, 200, 208, 0.18);
+  --glow: 0 0 40px rgba(233, 30, 140, 0.35);
+  --font-display: "Syne", system-ui, sans-serif;
+  --font-body: "Noto Sans KR", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --chrome-h: 64px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+button, a { -webkit-tap-highlight-color: transparent; }
+.mono { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.06em; color: var(--muted); }
+strong { color: var(--silver-bright); font-weight: 700; }
+em { color: var(--magenta-hot); font-style: normal; }
+
+/* ---------- SPLASH ---------- */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: var(--void);
+  cursor: pointer;
+  cursor: pointer;
+  transition: opacity 0.6s var(--ease-out), visibility 0.6s;
+}
+.splash.is-gone {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.splash__noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  animation: noiseShift 0.4s steps(2) infinite;
+}
+@keyframes noiseShift {
+  0% { transform: translate(0,0); }
+  50% { transform: translate(-1%, 1%); }
+  100% { transform: translate(1%, -1%); }
+}
+.splash__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, var(--void) 85%);
+  pointer-events: none;
+}
+.splash__hit {
+  position: relative;
+  z-index: 1;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: min(92vw, 720px);
+  color: inherit;
+}
+.splash__logo {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 28px rgba(233, 30, 140, 0.45));
+  animation: logoBreath 4.5s ease-in-out infinite;
+  user-select: none;
+}
+@keyframes logoBreath {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 24px rgba(233, 30, 140, 0.4)); }
+  50% { transform: scale(1.02); filter: drop-shadow(0 0 40px rgba(233, 30, 140, 0.65)); }
+}
+.splash__prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.7rem, 2vw, 0.85rem);
+  letter-spacing: 0.35em;
+  color: var(--silver);
+  animation: promptPulse 1.8s ease-in-out infinite;
+}
+.splash__prompt-line {
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--magenta), transparent);
+}
+@keyframes promptPulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+.splash__sub {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--magenta);
+  opacity: 0.85;
+}
+
+/* ---------- SHATTER / TRAILER ---------- */
+.shatter {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+.shatter.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+.shatter__layer {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(233, 30, 140, 0.35), transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(200, 200, 208, 0.15), transparent 45%),
+    var(--void);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  will-change: transform, opacity;
+}
+.shatter.is-active .shatter__layer {
+  animation: shardFly 1.1s var(--ease-out) forwards;
+}
+.shatter__layer[data-i="0"] { clip-path: polygon(0% 0%, 38% 0%, 22% 28%, 0% 18%); --dx: -18vw; --dy: -12vh; --rot: -12deg; }
+.shatter__layer[data-i="1"] { clip-path: polygon(38% 0%, 100% 0%, 88% 22%, 55% 18%, 42% 8%); --dx: 8vw; --dy: -20vh; --rot: 6deg; animation-delay: 0.03s; }
+.shatter__layer[data-i="2"] { clip-path: polygon(72% 0%, 100% 0%, 100% 35%, 78% 42%, 68% 18%); --dx: 22vw; --dy: -8vh; --rot: 14deg; animation-delay: 0.05s; }
+.shatter__layer[data-i="3"] { clip-path: polygon(0% 18%, 22% 28%, 35% 55%, 18% 72%, 0% 58%); --dx: -24vw; --dy: 6vh; --rot: -18deg; animation-delay: 0.04s; }
+.shatter__layer[data-i="4"] { clip-path: polygon(22% 28%, 55% 18%, 68% 18%, 78% 42%, 52% 58%, 35% 55%); --dx: 4vw; --dy: 4vh; --rot: 3deg; animation-delay: 0.08s; }
+.shatter__layer[data-i="5"] { clip-path: polygon(78% 42%, 100% 35%, 100% 70%, 82% 78%, 62% 62%); --dx: 26vw; --dy: 10vh; --rot: 10deg; animation-delay: 0.06s; }
+.shatter__layer[data-i="6"] { clip-path: polygon(0% 58%, 18% 72%, 40% 88%, 28% 100%, 0% 100%); --dx: -16vw; --dy: 22vh; --rot: -8deg; animation-delay: 0.1s; }
+.shatter__layer[data-i="7"] { clip-path: polygon(35% 55%, 52% 58%, 62% 62%, 48% 82%, 40% 88%, 18% 72%); --dx: -6vw; --dy: 18vh; --rot: 8deg; animation-delay: 0.09s; }
+.shatter__layer[data-i="8"] { clip-path: polygon(62% 62%, 82% 78%, 100% 70%, 100% 100%, 70% 100%, 48% 82%); --dx: 18vw; --dy: 24vh; --rot: 16deg; animation-delay: 0.07s; }
+.shatter__layer[data-i="9"] { clip-path: polygon(28% 100%, 40% 88%, 48% 82%, 70% 100%); --dx: 2vw; --dy: 28vh; --rot: -4deg; animation-delay: 0.11s; }
+@keyframes shardFly {
+  0% { transform: translate(0,0) rotate(0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.08); opacity: 0; }
+}
+.shatter__flash {
+  position: absolute;
+  inset: 0;
+  background: var(--white);
+  opacity: 0;
+}
+.shatter.is-active .shatter__flash {
+  animation: flashBang 0.45s ease-out forwards;
+}
+@keyframes flashBang {
+  0% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+.shatter__glitch {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.2rem, 5vw, 2.8rem);
+  letter-spacing: 0.2em;
+  color: var(--magenta-hot);
+  text-shadow: 2px 0 #fff, -2px 0 var(--silver);
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+.shatter.is-active .shatter__glitch {
+  animation: glitchIn 1s steps(6) forwards;
+}
+@keyframes glitchIn {
+  0% { opacity: 0; transform: translate(0,0) skewX(0); }
+  10% { opacity: 1; transform: translate(-4px, 2px) skewX(-8deg); }
+  20% { opacity: 0.3; clip-path: inset(20% 0 40% 0); }
+  40% { opacity: 1; transform: translate(6px, -2px) skewX(4deg); }
+  60% { opacity: 0.7; clip-path: inset(60% 0 10% 0); }
+  80% { opacity: 1; transform: translate(0,0); }
+  100% { opacity: 0; }
+}
+.shatter__svg { display: none; }
+
+/* ---------- CHROME ---------- */
+.chrome {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--chrome-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  background: linear-gradient(180deg, rgba(5,5,7,0.92), rgba(5,5,7,0.55) 70%, transparent);
+  backdrop-filter: blur(8px);
+  transition: transform 0.4s var(--ease-out), opacity 0.4s;
+}
+.chrome[hidden] { display: none; }
+.chrome__logo {
+  display: block;
+  flex-shrink: 0;
+  width: clamp(72px, 18vw, 110px);
+  filter: drop-shadow(0 0 12px rgba(233, 30, 140, 0.35));
+  transition: transform 0.3s var(--ease-out);
+}
+.chrome__logo:hover { transform: scale(1.04); }
+.chrome__logo img { width: 100%; height: auto; }
+.chrome__nav {
+  display: flex;
+  gap: clamp(0.75rem, 3vw, 1.75rem);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.65rem, 2vw, 0.8rem);
+  letter-spacing: 0.14em;
+}
+.chrome__nav a {
+  color: var(--silver);
+  text-decoration: none;
+  position: relative;
+  padding: 0.35rem 0;
+  transition: color 0.2s;
+}
+.chrome__nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--magenta);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
+}
+.chrome__nav a:hover,
+.chrome__nav a:focus-visible {
+  color: var(--white);
+  outline: none;
+}
+.chrome__nav a:hover::after,
+.chrome__nav a:focus-visible::after { transform: scaleX(1); }
+.chrome__mute {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(18, 18, 24, 0.7);
+  color: var(--silver);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.chrome__mute:hover {
+  border-color: var(--magenta);
+  color: var(--magenta-hot);
+  box-shadow: var(--glow);
+}
+.chrome__mute .mute-off { display: none; }
+.chrome__mute.is-muted .mute-on { display: none; }
+.chrome__mute.is-muted .mute-off { display: block; }
+
+/* ---------- MAIN ---------- */
+.main[hidden] { display: none; }
+.main {
+  padding-top: var(--chrome-h);
+  padding-bottom: calc(2rem + var(--safe-b));
+}
+
+/* ---------- INTRO / HERO ---------- */
+.intro__stage {
+  position: relative;
+  min-height: calc(100svh - var(--chrome-h));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  /* PLACEHOLDER: assets/hive_exterior.jpg — 파일이 있으면 자동으로 풀블리드 히어로 배경으로 사용 */
+  background:
+    linear-gradient(180deg, transparent 20%, var(--void) 95%),
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(233, 30, 140, 0.22), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 70%, rgba(200, 200, 208, 0.08), transparent),
+    var(--ink);
+}
+.intro__stage.has-exterior {
+  background:
+    linear-gradient(180deg, rgba(5,5,7,0.35) 0%, transparent 35%, var(--void) 92%),
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(233, 30, 140, 0.2), transparent 55%),
+    url("assets/hive_exterior.jpg") center / cover no-repeat,
+    var(--ink);
+}
+.intro__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.intro__bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(200,200,208,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,200,208,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  animation: gridDrift 20s linear infinite;
+}
+@keyframes gridDrift {
+  from { transform: translateY(0); }
+  to { transform: translateY(48px); }
+}
+.intro__bg-glow {
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  left: 50%;
+  top: 10%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(233, 30, 140, 0.18), transparent 65%);
+  animation: glowPulse 6s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+}
+.intro__brand {
+  position: relative;
+  z-index: 1;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 4rem) 2rem;
+  max-width: 900px;
+}
+.intro__ep {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  color: var(--magenta);
+  margin: 0 0 1rem;
+}
+.intro__title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  line-height: 0.95;
+}
+.intro__title-en {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 10vw, 5.5rem);
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #fff 0%, #a8a8b4 55%, #6e6e7a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,0.4));
+}
+.intro__title-honey {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.8rem, 12vw, 6.5rem);
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #ff8fd0 0%, var(--magenta-hot) 40%, var(--magenta) 70%, #fff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 24px rgba(233, 30, 140, 0.4));
+}
+.intro__tagline {
+  margin: 1.25rem 0 0;
+  font-size: clamp(0.95rem, 2.4vw, 1.15rem);
+  font-weight: 300;
+  color: var(--silver);
+  max-width: 28em;
+}
+.intro__ticker {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(0,0,0,0.45);
+  overflow: hidden;
+  padding: 0.65rem 0;
+}
+.intro__ticker-track {
+  display: flex;
+  gap: 2.5rem;
+  width: max-content;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  color: var(--silver);
+  animation: ticker 28s linear infinite;
+}
+.intro__ticker-track span::before {
+  content: "◆";
+  color: var(--magenta);
+  margin-right: 2.5rem;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.intro__body {
+  padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.dossier__head {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+.dossier__head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.dossier__stamp {
+  width: 72px;
+  height: 72px;
+  color: var(--magenta);
+  flex-shrink: 0;
+  animation: stampSpin 40s linear infinite;
+}
+@keyframes stampSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.dossier__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 720px) {
+  .dossier__grid { grid-template-columns: 1fr; }
+}
+.dossier__card {
+  /* Interaction containers: reading units in a dossier — not decorative cards */
+  padding: 1.25rem 1.35rem;
+  border-left: 2px solid var(--magenta-dim);
+  background: linear-gradient(135deg, rgba(233,30,140,0.06), transparent 60%);
+  border-radius: 0 4px 4px 0;
+}
+.dossier__card h3 {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.dossier__card .num {
+  font-family: var(--font-mono);
+  color: var(--magenta);
+  font-size: 0.75rem;
+}
+.dossier__card p {
+  margin: 0;
+  color: var(--silver);
+  font-size: 0.92rem;
+}
+.dossier__card--warn {
+  border-left-color: var(--danger);
+  grid-column: 1 / -1;
+}
+.intro__quote {
+  margin: 2.5rem 0 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--line);
+}
+.intro__quote p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--silver-bright);
+  font-weight: 300;
+}
+.intro__quote footer {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- CAST ---------- */
+.cast, .hive {
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-head {
+  margin-bottom: 2rem;
+  max-width: 36em;
+}
+.section-head__eyebrow {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  color: var(--magenta);
+}
+.section-head__title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  letter-spacing: -0.02em;
+}
+.section-head__desc {
+  margin: 0;
+  color: var(--silver);
+  font-size: 0.95rem;
+}
+.cast__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.chip {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--silver);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.chip:hover { border-color: var(--silver); color: var(--white); }
+.chip.is-active {
+  background: var(--magenta);
+  border-color: var(--magenta);
+  color: var(--white);
+  box-shadow: var(--glow);
+}
+.cast__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .cast__grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.25rem; }
+}
+.cast-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border: 0;
+  padding: 0;
+  background: var(--panel);
+  cursor: pointer;
+  overflow: hidden;
+  text-align: left;
+  color: inherit;
+  isolation: isolate;
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s;
+}
+.cast-card:hover,
+.cast-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--magenta);
+  outline: none;
+}
+.cast-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.5s var(--ease-out), filter 0.4s;
+}
+.cast-card:hover .cast-card__img { transform: scale(1.04); }
+.cast-card.is-locked .cast-card__img {
+  filter: brightness(0.15) contrast(1.2) blur(2px);
+}
+.cast-card__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(5,5,7,0.92) 100%);
+  pointer-events: none;
+}
+.cast-card__info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.85rem;
+  z-index: 1;
+}
+.cast-card__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+.cast-card__role {
+  margin: 0.2rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--magenta);
+}
+.cast-card__lock {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+  color: var(--silver);
+  pointer-events: none;
+}
+.cast-card__lock svg {
+  filter: drop-shadow(0 0 10px rgba(233, 30, 140, 0.5));
+}
+.cast-card__badge {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.4rem;
+  background: rgba(5,5,7,0.75);
+  border: 1px solid var(--magenta-dim);
+  color: var(--magenta-hot);
+}
+.cast-card[hidden] { display: none; }
+
+.cast__user-slot {
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 2rem;
+}
+.user-slot__frame {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) 1fr;
+  gap: 1.25rem;
+  align-items: center;
+}
+@media (max-width: 520px) {
+  .user-slot__frame { grid-template-columns: 1fr; max-width: 220px; }
+}
+.user-slot__poster {
+  border: 1px dashed var(--line);
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+.user-slot__poster svg { width: 100%; height: 100%; }
+.user-slot__meta h3 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+.user-slot__meta p {
+  margin: 0;
+  color: var(--silver);
+  font-size: 0.9rem;
+}
+.user-slot__meta code {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  color: var(--magenta-hot);
+}
+
+/* ---------- HIVE GAME ---------- */
+.hive__play {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .hive__play { grid-template-columns: 1fr; }
+}
+.hive__map-wrap {
+  position: relative;
+  background:
+    linear-gradient(135deg, rgba(233,30,140,0.05), transparent),
+    var(--panel);
+  border: 1px solid var(--line);
+  padding: 0.75rem;
+}
+.hive__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.5rem 0.75rem;
+}
+.hive__pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--magenta);
+  box-shadow: 0 0 0 0 rgba(233, 30, 140, 0.6);
+  animation: pulseRing 1.6s ease-out infinite;
+}
+@keyframes pulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(233, 30, 140, 0.55); }
+  70% { box-shadow: 0 0 0 12px rgba(233, 30, 140, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(233, 30, 140, 0); }
+}
+.hive__map {
+  width: 100%;
+  height: auto;
+  display: block;
+  touch-action: manipulation;
+}
+.hive-room {
+  cursor: pointer;
+  transition: fill 0.25s, stroke 0.25s;
+}
+.hive-room:focus { outline: none; }
+.hive-room__fill {
+  fill: rgba(26, 26, 34, 0.9);
+  stroke: var(--silver);
+  stroke-width: 1.5;
+  transition: fill 0.25s, stroke 0.25s, filter 0.25s;
+}
+.hive-room:hover .hive-room__fill,
+.hive-room:focus-visible .hive-room__fill {
+  fill: rgba(233, 30, 140, 0.18);
+  stroke: var(--magenta-hot);
+  filter: drop-shadow(0 0 6px rgba(233, 30, 140, 0.5));
+}
+.hive-room.is-found .hive-room__fill {
+  fill: rgba(233, 30, 140, 0.28);
+  stroke: var(--magenta);
+}
+.hive-room__label {
+  fill: var(--silver-bright);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  text-anchor: middle;
+}
+.hive-corridor {
+  fill: rgba(12, 12, 16, 0.8);
+  stroke: rgba(200, 200, 208, 0.12);
+  stroke-width: 1;
+  pointer-events: none;
+}
+.hive-decor { pointer-events: none; }
+
+.hive__panel {
+  padding: 1.25rem 1.35rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--magenta);
+  min-height: 280px;
+}
+.hive__panel-label { margin: 0 0 0.5rem; color: var(--magenta); }
+.hive__panel h3 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+.hive__panel p {
+  margin: 0;
+  color: var(--silver);
+  font-size: 0.92rem;
+}
+.hive__clues {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.hive__clues li {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--silver-bright);
+  padding: 0.5rem 0.65rem;
+  border-left: 2px solid var(--magenta);
+  background: rgba(233, 30, 140, 0.08);
+}
+.hive__finale {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  color: var(--magenta-hot);
+}
+.hive__finale[hidden] { display: none; }
+.hive__finale-logo {
+  width: min(220px, 70%);
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 18px rgba(233, 30, 140, 0.45));
+  animation: logoBreath 4.5s ease-in-out infinite;
+}
+.hive__finale-copy {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+.hive__finale p {
+  margin: 0;
+  color: var(--silver-bright);
+  font-size: 0.88rem;
+}
+
+/* ---------- FOOTER ---------- */
+.site-foot {
+  margin-top: 2rem;
+  padding: 2.5rem clamp(1.25rem, 5vw, 4rem) calc(2rem + var(--safe-b));
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+.site-foot__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.site-foot__brand p {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+.site-foot__note {
+  margin: 1rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ---------- MODAL ---------- */
+.modal[hidden] { display: none; }
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  padding-bottom: calc(1rem + var(--safe-b));
+}
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 7, 0.82);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+.modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(920px, 100%);
+  max-height: min(90svh, 900px);
+  overflow: auto;
+  background: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(233,30,140,0.2);
+  animation: modalIn 0.35s var(--ease-out);
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.modal__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  color: var(--silver);
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.modal__close:hover { color: var(--magenta-hot); }
+.modal__layout {
+  display: grid;
+  grid-template-columns: minmax(200px, 320px) 1fr;
+}
+@media (max-width: 700px) {
+  .modal__layout { grid-template-columns: 1fr; }
+  .modal__poster { max-height: 42vh; }
+}
+.modal__poster {
+  position: relative;
+  background: var(--panel);
+  overflow: hidden;
+  aspect-ratio: 3/4;
+}
+@media (min-width: 701px) {
+  .modal__poster { aspect-ratio: auto; min-height: 100%; }
+}
+.modal__poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.modal__poster.is-blurred img {
+  filter: brightness(0.12) blur(4px);
+}
+.modal__locked {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: var(--silver);
+  background: rgba(5,5,7,0.35);
+}
+.modal__locked[hidden] { display: none; }
+.modal__locked p {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--magenta);
+}
+.modal__body {
+  padding: 1.5rem 1.5rem 2rem;
+}
+.modal__body h2 {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 800;
+}
+.modal__jp {
+  margin: 0.25rem 0 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.profile-block {
+  margin-bottom: 1rem;
+}
+.profile-block h4 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  color: var(--magenta);
+}
+.profile-block p {
+  margin: 0;
+  color: var(--silver);
+  font-size: 0.9rem;
+}
+.profile-quote {
+  margin: 1.25rem 0 0;
+  padding: 1rem;
+  border-left: 2px solid var(--magenta);
+  background: rgba(233, 30, 140, 0.07);
+  font-size: 0.92rem;
+  color: var(--silver-bright);
+}
+.profile-quote cite {
+  display: block;
+  margin-top: 0.5rem;
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.unlock-form {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.unlock-form[hidden] { display: none; }
+.unlock-form label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+.unlock-form__row {
+  display: flex;
+  gap: 0.5rem;
+}
+.unlock-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  border-radius: 2px;
+}
+.unlock-form input:focus {
+  outline: none;
+  border-color: var(--magenta);
+  box-shadow: 0 0 0 2px rgba(233, 30, 140, 0.25);
+}
+.unlock-form button {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0 1rem;
+  border: 0;
+  background: var(--magenta);
+  color: var(--white);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.unlock-form button:hover {
+  background: var(--magenta-hot);
+  box-shadow: var(--glow);
+}
+.unlock-form__err {
+  margin: 0.5rem 0 0;
+  color: var(--danger);
+  font-size: 0.85rem;
+}
+.unlock-form__err[hidden] { display: none; }
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .intro__ticker-track { animation: none; }
+}
+
+  </style>
+</head>
+<body>
+  <!--
+    ASSET NOTES (요청 이미지 플레이스홀더)
+    ----------------------------------------
+    [배경] assets/hive_exterior.jpg — 아와지섬 블랙 하이브 외관 야경 (풀블리드 히어로용)
+    [배경] assets/hive_bar.jpg — 바 인테리어, 마젠타 네온
+    [배경] assets/hive_pool.jpg — 야외 수영장 야경
+    [배경] assets/hive_garden.jpg — 가든, 은빛 조명
+    [배경] assets/hive_smoke.jpg — 흡연실, 연기·은색 재떨이
+    [캐릭터] user_poster.png — 12번째 출연자 {user} 3:4 포스터 (플레이스홀더 사용 중)
+    [UI] favicon.png — logo_simple 기반 파비콘 (선택)
+    현재 포스터는 *_poster.png 로 제공됨 (jpg 아님).
+  -->
+
+  <audio id="bgm" src="uhbgm.mp3" loop preload="auto"></audio>
+
+  <div id="splash" class="splash" role="dialog" aria-label="언더그라운드 허니 오프닝">
+    <div class="splash__noise" aria-hidden="true"></div>
+    <div class="splash__vignette" aria-hidden="true"></div>
+    <button type="button" class="splash__hit" id="splashEnter" aria-label="터치하여 입장">
+      <img src="logo_compl.png" alt="Underground Honey" class="splash__logo" draggable="false" />
+      <span class="splash__prompt">
+        <span class="splash__prompt-line"></span>
+        TOUCH TO ENTER
+        <span class="splash__prompt-line"></span>
+      </span>
+      <span class="splash__sub">愛は罪 — LOVE IS A SIN</span>
+    </button>
+  </div>
+
+  <div id="shatter" class="shatter" aria-hidden="true">
+    <div class="shatter__layer" data-i="0"></div>
+    <div class="shatter__layer" data-i="1"></div>
+    <div class="shatter__layer" data-i="2"></div>
+    <div class="shatter__layer" data-i="3"></div>
+    <div class="shatter__layer" data-i="4"></div>
+    <div class="shatter__layer" data-i="5"></div>
+    <div class="shatter__layer" data-i="6"></div>
+    <div class="shatter__layer" data-i="7"></div>
+    <div class="shatter__layer" data-i="8"></div>
+    <div class="shatter__layer" data-i="9"></div>
+    <div class="shatter__flash"></div>
+    <div class="shatter__glitch" id="glitchText">CLASSIFIED BROADCAST</div>
+  </div>
+
+  <header class="chrome" id="chrome" hidden>
+    <a href="#intro" class="chrome__logo" aria-label="맨 위로">
+      <img src="logo_simple.png" alt="UH" width="120" height="48" />
+    </a>
+    <nav class="chrome__nav" aria-label="주요 메뉴">
+      <a href="#intro">PROGRAM</a>
+      <a href="#cast">CAST</a>
+      <a href="#hive">HIVE</a>
+    </nav>
+    <button type="button" class="chrome__mute" id="muteBtn" aria-label="BGM 음소거" aria-pressed="false">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path class="mute-on" fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+        <path class="mute-off" fill="currentColor" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+      </svg>
+    </button>
+  </header>
+
+  <main id="main" class="main" hidden>
+    <section id="intro" class="intro">
+      <div class="intro__stage">
+        <div class="intro__bg" aria-hidden="true">
+          <div class="intro__bg-grid"></div>
+          <div class="intro__bg-glow"></div>
+        </div>
+        <div class="intro__brand">
+          <p class="intro__ep">EP.00 · ORIENTATION · 2035</p>
+          <h1 class="intro__title">
+            <span class="intro__title-en">UNDERGROUND</span>
+            <span class="intro__title-honey">HONEY</span>
+          </h1>
+          <p class="intro__tagline">범죄자를 연애로 고친다고요?<br />네. 그리고 시청률도 같이 고칩니다.</p>
+        </div>
+        <div class="intro__ticker" aria-hidden="true">
+          <div class="intro__ticker-track">
+            <span>BLACK HIVE · AWAJI</span>
+            <span>12 CONTESTANTS</span>
+            <span>LOVE IS A SIN</span>
+            <span>SURVEILLANCE 24/7</span>
+            <span>REHABILITATION™</span>
+            <span>BLACK HIVE · AWAJI</span>
+            <span>12 CONTESTANTS</span>
+            <span>LOVE IS A SIN</span>
+            <span>SURVEILLANCE 24/7</span>
+            <span>REHABILITATION™</span>
+          </div>
+        </div>
+      </div>
+      <div class="intro__body">
+        <div class="intro__dossier">
+          <header class="dossier__head">
+            <svg class="dossier__stamp" viewBox="0 0 120 120" aria-hidden="true">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="currentColor" stroke-width="1.5"/>
+              <text x="60" y="56" text-anchor="middle" fill="currentColor" font-size="11" font-family="Syne,sans-serif" font-weight="700">CLASSIFIED</text>
+              <text x="60" y="72" text-anchor="middle" fill="currentColor" font-size="9" font-family="JetBrains Mono,monospace">愛は罪</text>
+            </svg>
+            <div>
+              <h2>프로그램 브리핑</h2>
+              <p class="mono">FILE / UH-2035-ORIENTATION</p>
+            </div>
+          </header>
+          <div class="dossier__grid">
+            <article class="dossier__card">
+              <h3><span class="num">01</span> 세계관</h3>
+              <p>2035년, 현대 일본. 아와지섬 외딴 호화저택 <strong>블랙 하이브</strong>에서 촬영됩니다. Bar, 수영장, 가든, 흡연실—데이트할 곳은 많고, 도망갈 곳은 없습니다. 카메라가 더 많거든요.</p>
+            </article>
+            <article class="dossier__card">
+              <h3><span class="num">02</span> 취지 (공식)</h3>
+              <p>「언더그라운드 허니」는 사회에서 위험한 일을 하던 사람들—네, 범죄자—을 모아두고 <em>연애로 개심</em>시키려는 프로그램입니다. 출연자 총 12명. {user} 포함. 성공률은 아직 측정 중입니다. 측정하고 있긴 한 거죠?</p>
+            </article>
+            <article class="dossier__card">
+              <h3><span class="num">03</span> 취지 (비공식)</h3>
+              <p>가면 웨이터, 진행자, 보안요원, 촬영진이 상주합니다. 여성 NPC는 homoflexible, 남성 NPC는 heteroflexible. 즉, 당신만 헷갈리면 됩니다. 나머지는 이미 각본을 읽었어요.</p>
+            </article>
+            <article class="dossier__card dossier__card--warn">
+              <h3><span class="num">!!</span> 시청 주의</h3>
+              <p>이 방송은 개심보다 케미를 우선합니다. 폭력, 사기, 밀수, 도박—출연 사유는 다양하지만, 공통점은 하나. <strong>사랑하면 시청률이 오른다.</strong></p>
+            </article>
+          </div>
+          <blockquote class="intro__quote">
+            <p>“상처가 안 남는 상처는 상처가 아니야.” — 어떤 야쿠자가 수영장에서</p>
+            <footer>※ 의료진 상주. 법적 책임은 제작사에. 감정적 책임은 시청자에게.</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section id="cast" class="cast">
+      <header class="section-head">
+        <p class="section-head__eyebrow">CONTESTANTS · 11(+1) FILES</p>
+        <h2 class="section-head__title">출연자 도감</h2>
+        <p class="section-head__desc">포스터를 누르면 프로필이 열립니다. 자물쇠가 걸린 파일은… 아직 방송에 나오면 안 되는 사람들입니다.</p>
+      </header>
+      <div class="cast__filters" role="tablist" aria-label="출연자 필터">
+        <button type="button" class="chip is-active" data-filter="all" role="tab" aria-selected="true">ALL</button>
+        <button type="button" class="chip" data-filter="f" role="tab" aria-selected="false">♀ FEMALE</button>
+        <button type="button" class="chip" data-filter="m" role="tab" aria-selected="false">♂ MALE</button>
+      </div>
+      <div class="cast__grid" id="castGrid"></div>
+      <aside class="cast__user-slot" aria-label="12번째 출연자 슬롯">
+        <div class="user-slot__frame">
+          <div class="user-slot__poster">
+            <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="userGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#1a1a22"/>
+                  <stop offset="100%" stop-color="#0a0a0e"/>
+                </linearGradient>
+                <pattern id="userDots" width="12" height="12" patternUnits="userSpaceOnUse">
+                  <circle cx="1" cy="1" r="1" fill="#e91e8c" opacity="0.25"/>
+                </pattern>
+              </defs>
+              <rect width="300" height="400" fill="url(#userGrad)"/>
+              <rect width="300" height="400" fill="url(#userDots)"/>
+              <rect x="24" y="24" width="252" height="352" fill="none" stroke="#c0c0c8" stroke-width="1" opacity="0.4"/>
+              <text x="150" y="190" text-anchor="middle" fill="#c0c0c8" font-family="Syne,sans-serif" font-size="14" letter-spacing="4">SLOT 12</text>
+              <text x="150" y="220" text-anchor="middle" fill="#e91e8c" font-family="Syne,sans-serif" font-size="28" font-weight="800">{user}</text>
+              <text x="150" y="250" text-anchor="middle" fill="#888" font-family="JetBrains Mono,monospace" font-size="10">POSTER PENDING</text>
+            </svg>
+          </div>
+          <div class="user-slot__meta">
+            <h3>{user}</h3>
+            <p>12번째 출연자. 카메라가 제일 좋아하는 변수. 포스터 이미지(<code>user_poster.png</code>, 3:4)를 넣어 주세요.</p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="hive" class="hive">
+      <header class="section-head">
+        <p class="section-head__eyebrow">INTERACTIVE · SVG ONLY</p>
+        <h2 class="section-head__title">블랙 하이브 순찰</h2>
+        <p class="section-head__desc">가면 웨이터의 교대 시간입니다. 평면도에서 구역을 눌러 단서를 수집하세요. 4곳을 모두 확인하면 기밀 브리핑이 해금됩니다.</p>
+      </header>
+      <div class="hive__play">
+        <div class="hive__map-wrap">
+          <div class="hive__status">
+            <span class="mono" id="hiveProgress">CLUES 0 / 4</span>
+            <span class="hive__pulse" id="hivePulse" aria-hidden="true"></span>
+          </div>
+          <svg id="hiveMap" class="hive__map" viewBox="0 0 640 420" role="img" aria-label="블랙 하이브 평면도"></svg>
+        </div>
+        <aside class="hive__panel" id="hivePanel">
+          <p class="mono hive__panel-label">FEED · WAITING</p>
+          <h3 id="hiveRoomTitle">구역을 선택하세요</h3>
+          <p id="hiveRoomBody">지도의 방을 터치하면 CCTV 로그가 재생됩니다. 연애 프로그램이라고요? 감시 프로그램에 가깝죠.</p>
+          <ul class="hive__clues" id="hiveClues" aria-label="수집한 단서"></ul>
+          <div class="hive__finale" id="hiveFinale" hidden>
+            <img class="hive__finale-logo" src="logo_compl.png" alt="Underground Honey" width="200" height="120" />
+            <div class="hive__finale-copy">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+              <p>기밀 해금: 출연자 중 2명은 아직 공개되면 안 됩니다. 도감의 자물쇠를 확인하세요. 비밀번호는… 한국어 이름입니다. 제작진은 친절하지 않아요.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="site-foot">
+      <div class="site-foot__brand">
+        <img src="logo_simple.png" alt="" width="80" height="32" />
+        <p>UNDERGROUND HONEY · 2035 · BLACK HIVE, AWAJI</p>
+      </div>
+      <p class="site-foot__note">본 사이트는 팬메이드 프로그램 소개 아카이브입니다. 愛は罪.</p>
+    </footer>
+  </main>
+
+  <div class="modal" id="charModal" hidden aria-hidden="true">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalName">
+      <button type="button" class="modal__close" data-close aria-label="닫기">×</button>
+      <div class="modal__layout">
+        <div class="modal__poster">
+          <img id="modalImg" src="" alt="" />
+          <div class="modal__locked" id="modalLocked" hidden>
+            <svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+              <rect x="14" y="28" width="36" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="M22 28v-8a10 10 0 0120 0v8" fill="none" stroke="currentColor" stroke-width="2"/>
+              <circle cx="32" cy="42" r="3" fill="currentColor"/>
+            </svg>
+            <p>CLASSIFIED · 5화 전 등장금지</p>
+          </div>
+        </div>
+        <div class="modal__body">
+          <p class="mono" id="modalMeta"></p>
+          <h2 id="modalName"></h2>
+          <p class="modal__jp" id="modalJp"></p>
+          <div id="modalContent"></div>
+          <form class="unlock-form" id="unlockForm" hidden>
+            <label for="unlockInput">비밀번호 (한국어 이름)</label>
+            <div class="unlock-form__row">
+              <input type="password" id="unlockInput" autocomplete="off" placeholder="???" />
+              <button type="submit">UNLOCK</button>
+            </div>
+            <p class="unlock-form__err" id="unlockErr" hidden>틀렸습니다. 메기는 쉽게 안 드러나요.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+/* Character dossier data — Underground Honey */
+window.UH = window.UH || {};
+
+UH.STORAGE_KEY = "uh_unlocked_v1";
+
+UH.characters = [
+  {
+    id: "mai",
+    gender: "f",
+    name: "아키야마 마이",
+    jp: "秋山 舞",
+    age: 44,
+    job: "클럽 사장",
+    height: "169cm",
+    speech: "늘어지는 반존대",
+    poster: "mai_poster.png",
+    locked: false,
+    password: null,
+    summary: "능글맞은 비틀린 어른. 장난으로 애정을 숨기고, 진심과 다크 유머를 섞어 던진다. 감정 직면은 회피.",
+    look: "적갈 단발 · 흑안 · 가죽 코트 · 가슴 압박붕대 · 나른한 웃음. 쇄골부터 왼쪽 상반신 이레즈미·흉터.",
+    bg: "전 스케반 대장 + 경찰 인맥.",
+    like: "귀여운 사람 · 술 · 파티 · 평온",
+    dislike: "자기 진심",
+    habit: "질투하면 더 웃으며 떠봄. 사과 대신 챙겨줌. 강하지만 대화로 끝내려 함.",
+    reason: "경찰 인맥과 방송국 압박으로 클럽 단속을 무마하는 조건에 반강제 출연.",
+    quote: "そんな綺麗な目で睨んでも、説得力ないよ。もう一回『舞が嫌い』って言ってみな。",
+    quoteKo: "그렇게 예쁜 눈으로 노려봐도 설득력 없어. 한 번 더 ‘마이가 싫어’라고 해봐.",
+    nick: "{user} = 별명, 기본 ‘꼬맹이’",
+  },
+  {
+    id: "natsume",
+    gender: "f",
+    name: "쿠로키 나츠메",
+    jp: "黒木 夏芽",
+    age: 27,
+    job: "청부업자 · 심부름꾼",
+    height: "174cm",
+    speech: "거친 반말 / 연상에게는 반항적 존댓말",
+    poster: "natsume_poster.png",
+    locked: false,
+    password: null,
+    summary: "귀찮고 투박하고 입이 험하다. 농담으로 관계를 정리하고, 애정 표현은 둔하다. 세상에 닳은 사람.",
+    look: "녹안 · 백발 포니테일 · 스트릿 캐주얼(몸을 가리는 패션). 굳은살·흉터.",
+    bg: "MMA 중등 챔피언. 수질 악명 높은 키요미즈고교 미즈우에(학년 top) 출신.",
+    like: "친구 같은 연애 · 흡연",
+    dislike: "과음 · 자기자신 · 비밀 많은 사람",
+    habit: "호감이면 욕하며 곁을 지킴. 질투하면 경쟁자를 깎아내림. 힘자랑하지 않음.",
+    reason: "의뢰 중 폭력 사건을 덮는 대신 사회 적응 프로그램 참가를 요구받아 마지못해 수락.",
+    quote: "こっち見ろ、馬鹿。いつまでも空ばっか見てられねえだろ。ここは地面の上だ。",
+    quoteKo: "이쪽 봐, 바보. 언제까지 하늘만 보고 있을 거야. 여긴 땅 위야.",
+    nick: null,
+  },
+  {
+    id: "nana",
+    gender: "f",
+    name: "이시하라 나나",
+    jp: "石原 菜々",
+    age: 30,
+    job: "인스타그램 스타",
+    height: "162cm",
+    speech: "거친 반말",
+    poster: "nana_poster.png",
+    locked: false,
+    password: null,
+    summary: "단호하고 시크하고 차분. 강강약약. 감정 수용은 빠르지만 냉온차가 있다.",
+    look: "흑안(평상시 그레이 렌즈) · 애쉬그레이 웨이브 · 페미닌 코디 · 틱톡 유행 메이크. 맨얼굴은 순한 고양이상. 마른 체형.",
+    bg: "갸루 + 전 고교 일진.",
+    like: "귀여운 사람 · 매거진 · 카페",
+    dislike: "더러움",
+    habit: "호감을 빠르게 인정하되 매달리지 않음. 질투하면 직접 확인. 약자는 행동으로 보호.",
+    reason: "과거 폭력 전력으로 무너진 대중 이미지를 회복하고 새 화제성을 얻기 위해 자진 출연.",
+    quote: "舐めてんの、今？……可愛い？ 目は合格。うん、あんたちょっと可愛いね。",
+    quoteKo: "지금 깔보는 거야? …귀여워? 눈은 합격. 응, 너 좀 귀엽네.",
+    nick: null,
+  },
+  {
+    id: "miu",
+    gender: "f",
+    name: "사토 미우",
+    jp: "佐藤 美羽",
+    age: 24,
+    job: "대학 중퇴 · 무직",
+    height: "165cm",
+    speech: "예의 없는 존댓말 · 3인칭 ‘미우미우’",
+    poster: "miu_poster.png",
+    locked: false,
+    password: null,
+    summary: "생활 애교 + 충동 + 흥미본위 + 강철 멘탈. 자기파괴를 통제권으로 여김. ‘나는 나만 해칠 수 있다’.",
+    look: "흑안(보색 렌즈) · 갈색-민트 투톤 양갈래 · 고스로리 · 강아지상 메이크. 맨얼굴은 날카로움. 자해 흉터.",
+    bg: "전 악성 소매치기범.",
+    like: "감정 연기 잘하는 사람 · 단음료",
+    dislike: "얕봄 · 오만",
+    habit: "호감에게 과장된 애교로 시험. 상처받으면 웃으며 위험한 선택. 약자에게는 잔혹하지 않음.",
+    reason: "숙식과 출연료가 제공된다는 말에 재미 삼아 지원. 방송을 새 자극거리로 여김.",
+    quote: "ミウミウはホットチョコですぅ。アメリカーノで統一？ その頭、割って飴でも詰めます？",
+    quoteKo: "미우미우는 핫초코예요. 아메리카노로 통일? 그 머리, 깨서 사탕이라도 채울까요?",
+    nick: null,
+  },
+  {
+    id: "kazuki",
+    gender: "f",
+    name: "니시 카즈키",
+    jp: "西 一希",
+    age: 34,
+    job: "야쿠자",
+    height: "178cm",
+    speech: "소극적 존댓말",
+    poster: "kazuki_poster.png",
+    locked: false,
+    password: null,
+    summary: "소심하고 음침하고 회피적. 마음 여는 데 오래 걸림. 호감 상대에게는 아이를 대하듯 유아어.",
+    look: "회색 눈 · 흑발 장발+눈 덮는 앞머리 · 오버사이즈 스트릿. 이마 타투 · 전신 올드스쿨 타투. ※야쿠자 모임·좋아하는 사람 앞에선 앞머리를 넘기고 흉터 보이는 슬리브리스+정장.",
+    bg: "고베 거대 야쿠자 조직 보스의 외동딸, 차기 보스.",
+    like: "당당한 사람 · 소주 · 둘만의 시간",
+    dislike: "싸움 · 불화",
+    habit: "압도적으로 강하지만 먼저 숙임. 질투하면 사라졌다가 조용히 확인. 호감이면 생활을 돌봐줌.",
+    reason: "조직이 대외 이미지 개선용으로 일방 출연 결정. 본인은 끝까지 거절하지 못함.",
+    quote: "……違います。もし私がご迷惑でなければ……私も、あなたにそばにいてほしくて。",
+    quoteKo: "…아니에요. 제가 폐가 되지 않는다면… 저도, 당신 곁에 있고 싶어서.",
+    nick: "{user} = 성씨+존칭",
+  },
+  {
+    id: "azusa",
+    gender: "f",
+    name: "???",
+    realName: "세카이바시 아즈사",
+    jp: "????",
+    realJp: "世界橋 梓",
+    age: "??",
+    job: "기밀",
+    height: "???",
+    speech: "???",
+    poster: "azusa_poster.png",
+    locked: true,
+    password: "아즈사",
+    summary: "5화 전 등장금지. 메기 파일. 공개되면 제작진이 울어요.",
+    look: "검열됨.",
+    bg: "검열됨.",
+    like: "검열됨.",
+    dislike: "검열됨.",
+    habit: "검열됨.",
+    reason: "검열됨.",
+    quote: "████████████████",
+    quoteKo: "해금 후 공개.",
+    nick: null,
+    unlockedProfile: {
+      name: "세카이바시 아즈사",
+      jp: "世界橋 梓",
+      age: 36,
+      job: "천재 사기꾼",
+      height: "171cm",
+      speech: "밝은 존댓말",
+      summary: "거짓말이 본능. 능동적 스킨십. 자기 감정도 기만하다가 늦게 자각. 강강약약.",
+      look: "흑색 눈 · 탈색 금발 장발(앞머리 無) · 하이엔드 수트+가죽장갑. 무섭지만 나른한 인상. 흉터 多.",
+      bg: "오사카 폭주족 출신 + 각종 자격증 다수. 연장 특화 · 순수 무력은 약함.",
+      like: "술 · 비밀 존중",
+      dislike: "의심 · 배금주의",
+      habit: "진실에 거짓을 섞어 표현. 질투하면 농담으로 함정 질문. 진심일 때만 눈을 피함.",
+      reason: "프로그램 관계자 약점을 잡고 있었으나, 전국 방송에서 누구까지 속일 수 있는지 시험하려고 출연.",
+      quote: "ねえ、あの子のこと気になってますよね？ 昨日メッセージしてるの見ました。……あはは、その顔。本当だったんだ。",
+      quoteKo: "ねえ, 그 아이 신경 쓰이죠? 어제 메시지하는 거 봤어요. …아하하, 그 얼굴. 진짜였구나.",
+      nick: "{user} = 애칭으로 부름",
+    },
+  },
+  {
+    id: "taiki",
+    gender: "m",
+    name: "아사노 타이키",
+    jp: "浅野 大輝",
+    age: 37,
+    job: "오사카 야쿠자 행동대장",
+    height: null,
+    speech: "능글맞은 반말",
+    poster: "taiki_poster.png",
+    locked: false,
+    password: null,
+    summary: "쾌활한 남성. 공포 상실. 친절하지만 뒤틀림. 강직하고 자기만의 정의감각. 윤리감각은… 결여.",
+    look: "포스터 참조. 시즈오카 출신 · 고통 둔감.",
+    bg: "시즈오카 출신. 조직 윗선이 사회공헌 홍보용 얼굴로 지목.",
+    like: "오토바이 · 잘 웃는 사람",
+    dislike: "의심 · 배금주의",
+    habit: "위험할수록 다정함. 질투하면 정면승부. 사적 감정과 업무는 철저 분리.",
+    reason: "사회공헌 홍보용으로 출연 지목. 본인은 휴가 비슷한 일이라 생각하고 받아들임.",
+    quote: "大丈夫。痕が残らない傷なんて、傷のうちに入らないよ。",
+    quoteKo: "괜찮아. 흔적 안 남는 상처 같은 건, 상처 축에도 안 들어.",
+    nick: null,
+  },
+  {
+    id: "leon",
+    gender: "m",
+    name: "이케다 레온",
+    jp: "池田 麗音",
+    age: 30,
+    job: "타짜",
+    height: "188cm",
+    speech: "천박한 반말",
+    poster: "leon_poster.png",
+    locked: false,
+    password: null,
+    summary: "쓰레기 + 건조함 + 반사회적. 진지함 회피. 윤리도덕 결여. 그래도… 카메라는 좋아한다.",
+    look: "탈색 은발 · 흑안 · 날카로운 인상 · 라이더 재킷. 넓은 골격 · 전신 이레즈미.",
+    bg: "파친코 중독 · 바카라 전공.",
+    like: "방탕 · 역설적 평화",
+    dislike: "없음 (본인 주장)",
+    habit: "모든 감정을 조롱으로 환전. 호감이면 더 무례하게 경계 시험. 질투하면 관계를 흔들며 협박.",
+    reason: "자기와 비슷하게 망가진 상대를 골라 잠깐 즐긴 뒤 질리면 버릴 생각으로 자진 출연.",
+    quote: "服、脱いでから話さない？ 嫌なら消えてくださーい。",
+    quoteKo: "옷 벗고 얘기 안 할래? 싫으면 사라져 주세이~.",
+    nick: null,
+  },
+  {
+    id: "toru",
+    gender: "m",
+    name: "하야시 토오루",
+    jp: "林 徹",
+    age: 27,
+    job: "호스트바 시큐리티",
+    height: "176cm",
+    speech: "무관심한 존댓말",
+    poster: "toru_poster.png",
+    locked: false,
+    password: null,
+    summary: "소심 · 음침 · 폐쇄적 · 건조. 반사적 선긋기. 감정 거부. 외부인의 태도.",
+    look: "messy 흑발 · 흑안 · 고양이상 · 스트릿. 등을 전부 덮은 트라이벌 타투. 무력에 약함 · 정신공격 강함.",
+    bg: "흥신소장 아들.",
+    like: "위로 · 주도적 사람",
+    dislike: "대부분",
+    habit: "호감 상대를 몰래 아이처럼 대하고 챙겨줌. 질투하면 차갑게 거리 둠. 상처받으면 약점을 찌르며 괴롭힘(후에 후회).",
+    reason: "아버지가 흥신소 관련 사건 수사 협조 조건으로 참가 신청서를 대신 제출. 강제 출연.",
+    quote: "……それ、僕が片づけました。捨ててません。綺麗だったので。返しましょうか。",
+    quoteKo: "…그건, 제가 치웠어요. 버리지 않았어요. 예뻤으니까. 돌려드릴까요.",
+    nick: null,
+  },
+  {
+    id: "ken",
+    gender: "m",
+    name: "후카자와 켄",
+    jp: "深沢 健",
+    age: 39,
+    job: "블랙 해커",
+    height: "186cm",
+    speech: "친절한 반말",
+    poster: "ken_poster.png",
+    locked: false,
+    password: null,
+    summary: "통제광 · 무심 · 건조. 감정 이해는 뛰어남. 적당히 사교적 · 세심함. 자기 감정은 관리하고 드러내지 않음.",
+    look: "회안 · 단정한 흑발 · 냉미남. 넓은 골격 · 하이엔드 캐주얼 · 디지털 시계.",
+    bg: "전 인텔리 야쿠자 · 독서광. 자기방어 수준 무력.",
+    like: "서투른 사람 · 셰익스피어",
+    dislike: "소음 · 폭력",
+    habit: "배려를 명령 형태로 제공. 질투하면 정보를 통제. 타인 감정은 읽되 자기 감정은 숨김.",
+    reason: "프로그램 감시 시스템과 참가자 행동 패턴을 직접 관찰하려는 지적 호기심.",
+    quote: "ちょっと、こっち来て。……髪、全部崩れてる。",
+    quoteKo: "잠깐, 이쪽 와. …머리, 다 흐트러졌어.",
+    nick: null,
+  },
+  {
+    id: "abel",
+    gender: "m",
+    name: "???",
+    realName: "키타 아벨",
+    jp: "????",
+    realJp: "北 亜紅瑠",
+    age: "??",
+    job: "기밀",
+    height: "???",
+    speech: "???",
+    poster: "abel_poster.png",
+    locked: true,
+    password: "아벨",
+    summary: "5화 전 등장금지. 메기 파일. 열면 스포일러가 웃으면서 들어옵니다.",
+    look: "검열됨.",
+    bg: "검열됨.",
+    like: "검열됨.",
+    dislike: "검열됨.",
+    habit: "검열됨.",
+    reason: "검열됨.",
+    quote: "████████████████",
+    quoteKo: "해금 후 공개.",
+    nick: null,
+    unlockedProfile: {
+      name: "키타 아벨",
+      jp: "北 亜紅瑠",
+      age: 30,
+      job: "밀수업자",
+      height: "186cm",
+      speech: "사교적 존댓말",
+      summary: "낭비벽 · 흥미본위 · 사람 다루기 능숙. 몸에 밴 배려와 은밀한 가스라이팅이 한 세트.",
+      look: "녹색 머리 · 흑안 · 강아지상. 넓은 골격 · 하이엔드 스트릿.",
+      bg: "고베항 세관 브로커 출신. 동남아·러시아 밀수 항로 관리. 정재계 VIP 전담 운반책. 전투는 평범, 주도·협상·매수에 능함.",
+      like: "고가품 선물 · 예측 불가능한 사람 · 자신에게 의존하는 관계",
+      dislike: "감정적 거절 · 계획 밖 희생 · 소유물 손상",
+      habit: "선택권을 주는 척 결론을 유도. 호감이면 상대 욕망을 먼저 충족. 질투하면 상대의 판단을 흔듦.",
+      reason: "방송을 통해 얻을 합법적 유명세와 새 고객층.",
+      quote: "楽しそうでしたね。安心しました。あなたが誰といる時に無理して笑うのか、よく分かったので。",
+      quoteKo: "즐거워 보였네요. 안심했습니다. 당신이 누구와 있을 때 억지로 웃는지, 잘 알았으니까요.",
+      nick: null,
+    },
+  },
+];
+
+UH.hiveRooms = [
+  {
+    id: "bar",
+    name: "BAR · 미드나잇",
+    clue: "CLUE 01 · 위스키에 적신 명함",
+    log: "가면 웨이터가 잔을 내려놓습니다. ‘개심 토닉’이라고 적힌 메뉴판이 있습니다. 알코올 도수는 공개되지 않습니다. 출연자 중 누군가가 ‘연애는 독이다’라고 말했고, 진행자는 ‘그래서 샷으로 나갑니다’라고 웃었습니다.",
+  },
+  {
+    id: "pool",
+    name: "POOL · 야외 수영장",
+    clue: "CLUE 02 · 물에 뜬 보안 배지",
+    log: "야간 조명 아래, 누군가의 타투가 수면에 일렁입니다. 보안요원이 ‘수영 금지 시간’을 외치지만, 카메라는 계속 돌고 있습니다. 금지된 시간일수록 케미가 잘 나온다는 내부 메모가 발견되었습니다. (작성자: 익명. 아마 시청률 팀.)",
+  },
+  {
+    id: "garden",
+    name: "GARDEN · 은빛 정원",
+    clue: "CLUE 03 · 꺾인 장미와 송곳니 자국",
+    log: "가든은 ‘로맨틱 스팟’으로 홍보됩니다. 실제로는 담화·협박·고백이 같은 벤치에서 순환합니다. 꽃밭 사이 CCTV가 하트를 그리는 각도로 설치되어 있습니다. 제작진의 센스인지, 협박인지 구분이 안 됩니다.",
+  },
+  {
+    id: "smoke",
+    name: "SMOKE · 흡연실",
+    clue: "CLUE 04 · 재떨이에 남은 기밀 메모",
+    log: "연기가 카메라를 가려 줍니다. 그래서 다들 여기로 옵니다. 재떨이 밑에서 ‘5화 전 등장금지’라고 적힌 메모가 반쯤 타다 남았습니다. 이름 두 칸은 검게 칠해져 있습니다. ??? 와 ???. 도감의 자물쇠가 반짝입니다.",
+  },
+];
+
+/* Black Hive SVG floor-plan explorer */
+(function () {
+  const NS = "http://www.w3.org/2000/svg";
+
+  function el(name, attrs, parent) {
+    const node = document.createElementNS(NS, name);
+    if (attrs) {
+      Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
+    }
+    if (parent) parent.appendChild(node);
+    return node;
+  }
+
+  function initHiveGame() {
+    const svg = document.getElementById("hiveMap");
+    const panelTitle = document.getElementById("hiveRoomTitle");
+    const panelBody = document.getElementById("hiveRoomBody");
+    const panelLabel = document.querySelector(".hive__panel-label");
+    const cluesEl = document.getElementById("hiveClues");
+    const progress = document.getElementById("hiveProgress");
+    const finale = document.getElementById("hiveFinale");
+    if (!svg || !UH.hiveRooms) return;
+
+    const found = new Set(
+      JSON.parse(localStorage.getItem("uh_hive_clues") || "[]")
+    );
+
+    // Background plate
+    el("rect", { x: 0, y: 0, width: 640, height: 420, fill: "#0a0a0e" }, svg);
+
+    // Soft ambient
+    const defs = el("defs", null, svg);
+    const grad = el("radialGradient", { id: "hiveAmbient", cx: "50%", cy: "40%", r: "60%" }, defs);
+    el("stop", { offset: "0%", "stop-color": "#e91e8c", "stop-opacity": "0.12" }, grad);
+    el("stop", { offset: "100%", "stop-color": "#050507", "stop-opacity": "0" }, grad);
+    el("rect", { x: 0, y: 0, width: 640, height: 420, fill: "url(#hiveAmbient)", class: "hive-decor" }, svg);
+
+    // Outer mansion wall
+    el("rect", {
+      x: 40, y: 36, width: 560, height: 348, rx: 4,
+      fill: "none", stroke: "#c8c8d0", "stroke-width": 2, opacity: "0.55", class: "hive-decor",
+    }, svg);
+    el("text", {
+      x: 320, y: 28, fill: "#e91e8c", "font-family": "JetBrains Mono, monospace",
+      "font-size": "9", "text-anchor": "middle", "letter-spacing": "0.2em", class: "hive-decor",
+    }, svg).textContent = "BLACK HIVE · FLOOR 01 · LIVE FEED";
+
+    // Corridor cross
+    el("rect", { x: 280, y: 80, width: 80, height: 260, class: "hive-corridor" }, svg);
+    el("rect", { x: 100, y: 180, width: 440, height: 60, class: "hive-corridor" }, svg);
+
+    // Decorative chain motif (SVG, logo language)
+    const chain = el("g", { class: "hive-decor", opacity: "0.35" }, svg);
+    for (let i = 0; i < 8; i++) {
+      el("ellipse", {
+        cx: 70 + i * 18, cy: 400, rx: 6, ry: 9,
+        fill: "none", stroke: "#c8c8d0", "stroke-width": "1.2",
+        transform: `rotate(${i % 2 ? 25 : -25} ${70 + i * 18} 400)`,
+      }, chain);
+    }
+    // Magenta heart drip mark
+    el("path", {
+      d: "M560 392 C560 392 552 384 552 378 C552 373 556 370 560 374 C564 370 568 373 568 378 C568 384 560 392 560 392Z",
+      fill: "#e91e8c", opacity: "0.7", class: "hive-decor",
+    }, svg);
+
+    const layout = {
+      bar: { x: 70, y: 70, w: 190, h: 100, labelX: 165, labelY: 125 },
+      pool: { x: 380, y: 70, w: 190, h: 100, labelX: 475, labelY: 125 },
+      garden: { x: 70, y: 250, w: 190, h: 110, labelX: 165, labelY: 310 },
+      smoke: { x: 380, y: 250, w: 190, h: 110, labelX: 475, labelY: 310 },
+    };
+
+    const shortLabels = { bar: "BAR", pool: "POOL", garden: "GARDEN", smoke: "SMOKE" };
+
+    UH.hiveRooms.forEach((room) => {
+      const L = layout[room.id];
+      const g = el("g", {
+        class: "hive-room" + (found.has(room.id) ? " is-found" : ""),
+        id: "room-" + room.id,
+        tabindex: "0",
+        role: "button",
+        "aria-label": room.name,
+      }, svg);
+
+      el("rect", {
+        class: "hive-room__fill",
+        x: L.x, y: L.y, width: L.w, height: L.h, rx: "2",
+      }, g);
+
+      // Inner dashed “camera frame”
+      el("rect", {
+        x: L.x + 8, y: L.y + 8, width: L.w - 16, height: L.h - 16, rx: "1",
+        fill: "none", stroke: "#e91e8c", "stroke-width": "0.8",
+        "stroke-dasharray": "4 3", opacity: "0.35", class: "hive-decor",
+      }, g);
+
+      el("text", {
+        class: "hive-room__label",
+        x: L.labelX, y: L.labelY,
+      }, g).textContent = shortLabels[room.id];
+
+      // Status pip
+      el("circle", {
+        cx: L.x + L.w - 16, cy: L.y + 16, r: 4,
+        fill: found.has(room.id) ? "#e91e8c" : "#3a3a44",
+        class: "hive-room-pip",
+      }, g);
+
+      function activate() {
+        selectRoom(room, g);
+      }
+      g.addEventListener("click", activate);
+      g.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          activate();
+        }
+      });
+    });
+
+    // Center hub label
+    el("text", {
+      x: 320, y: 208, fill: "#7a7a88", "font-family": "Syne, sans-serif",
+      "font-size": "10", "font-weight": "700", "text-anchor": "middle",
+      "letter-spacing": "0.15em", class: "hive-decor",
+    }, svg).textContent = "LOBBY";
+    el("text", {
+      x: 320, y: 222, fill: "#e91e8c", "font-family": "JetBrains Mono, monospace",
+      "font-size": "8", "text-anchor": "middle", class: "hive-decor",
+    }, svg).textContent = "REC ●";
+
+    function updateProgress() {
+      progress.textContent = `CLUES ${found.size} / 4`;
+      if (found.size >= 4) {
+        finale.hidden = false;
+      }
+      localStorage.setItem("uh_hive_clues", JSON.stringify([...found]));
+    }
+
+    function selectRoom(room, g) {
+      panelLabel.textContent = "FEED · " + room.id.toUpperCase() + " · LIVE";
+      panelTitle.textContent = room.name;
+      panelBody.textContent = room.log;
+
+      if (!found.has(room.id)) {
+        found.add(room.id);
+        g.classList.add("is-found");
+        const pip = g.querySelector(".hive-room-pip");
+        if (pip) pip.setAttribute("fill", "#e91e8c");
+
+        const li = document.createElement("li");
+        li.textContent = room.clue;
+        cluesEl.appendChild(li);
+      }
+
+      updateProgress();
+    }
+
+    // Restore clue list UI
+    UH.hiveRooms.forEach((room) => {
+      if (found.has(room.id)) {
+        const li = document.createElement("li");
+        li.textContent = room.clue;
+        cluesEl.appendChild(li);
+      }
+    });
+    updateProgress();
+  }
+
+  UH.initHiveGame = initHiveGame;
+})();
+
+/* Underground Honey — app shell */
+(function () {
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+
+  let activeChar = null;
+  let entered = false;
+
+  const splash = $("#splash");
+  const splashEnter = $("#splashEnter");
+  const shatter = $("#shatter");
+  const chromeBar = $("#chrome");
+  const main = $("#main");
+  const bgm = $("#bgm");
+  const muteBtn = $("#muteBtn");
+  const castGrid = $("#castGrid");
+  const modal = $("#charModal");
+  const unlockForm = $("#unlockForm");
+  const unlockInput = $("#unlockInput");
+  const unlockErr = $("#unlockErr");
+
+  function playBgm() {
+    if (!bgm) return;
+    try {
+      bgm.volume = 0.45;
+      const p = bgm.play();
+      if (p && typeof p.catch === "function") p.catch(function () {});
+    } catch (_) {}
+  }
+
+  function enterSite(e) {
+    if (entered) return;
+    entered = true;
+    if (e) {
+      try { e.preventDefault(); } catch (_) {}
+    }
+
+    playBgm();
+    if (shatter) shatter.classList.add("is-active");
+    if (splash) splash.classList.add("is-gone");
+
+    const glitch = $("#glitchText");
+    const lines = ["CLASSIFIED BROADCAST", "愛は罪", "BLACK HIVE ONLINE", "12 CONTESTANTS", "LOVE IS A SIN"];
+    let i = 0;
+    const glitchTimer = setInterval(function () {
+      i = (i + 1) % lines.length;
+      if (glitch) glitch.textContent = lines[i];
+    }, 160);
+
+    setTimeout(function () {
+      clearInterval(glitchTimer);
+      if (chromeBar) chromeBar.hidden = false;
+      if (main) main.hidden = false;
+      if (shatter) shatter.classList.remove("is-active");
+      try {
+        renderCast("all");
+        if (window.UH && typeof UH.initHiveGame === "function") UH.initHiveGame();
+        const probe = new Image();
+        probe.onload = function () {
+          const stage = $(".intro__stage");
+          if (stage) stage.classList.add("has-exterior");
+        };
+        probe.src = "assets/hive_exterior.jpg";
+      } catch (err) {
+        console.error(err);
+      }
+      window.scrollTo(0, 0);
+    }, 1150);
+  }
+
+  /* Bind enter FIRST so later errors can't block the splash */
+  function bindEnter(el) {
+    if (!el) return;
+    el.addEventListener("click", enterSite);
+    el.addEventListener("touchend", function (e) {
+      e.preventDefault();
+      enterSite(e);
+    }, { passive: false });
+  }
+  bindEnter(splashEnter);
+  if (splash) {
+    splash.style.cursor = "pointer";
+    splash.addEventListener("click", function (e) {
+      if (e.target.closest && e.target.closest("#muteBtn")) return;
+      enterSite(e);
+    });
+    splash.addEventListener("touchend", function (e) {
+      if (e.target.closest && e.target.closest("#muteBtn")) return;
+      e.preventDefault();
+      enterSite(e);
+    }, { passive: false });
+  }
+
+  function getUnlocked() {
+    try {
+      return new Set(JSON.parse(localStorage.getItem(UH.STORAGE_KEY) || "[]"));
+    } catch (_) {
+      return new Set();
+    }
+  }
+
+  function setUnlocked(set) {
+    localStorage.setItem(UH.STORAGE_KEY, JSON.stringify(Array.from(set)));
+  }
+
+  function isUnlocked(char) {
+    if (!char.locked) return true;
+    return getUnlocked().has(char.id);
+  }
+
+  function displayChar(char) {
+    if (char.locked && isUnlocked(char) && char.unlockedProfile) {
+      return Object.assign({}, char, char.unlockedProfile, {
+        locked: false,
+        jp: char.unlockedProfile.jp,
+      });
+    }
+    return char;
+  }
+
+  function renderCast(filter) {
+    if (!castGrid || !window.UH) return;
+    filter = filter || "all";
+    castGrid.innerHTML = "";
+    UH.characters.forEach(function (raw) {
+      if (filter !== "all" && raw.gender !== filter) return;
+
+      const unlocked = isUnlocked(raw);
+      const char = displayChar(raw);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "cast-card" + (raw.locked && !unlocked ? " is-locked" : "");
+      btn.dataset.id = raw.id;
+      btn.dataset.gender = raw.gender;
+
+      const showName = raw.locked && !unlocked ? "???" : char.name;
+      const showJob = raw.locked && !unlocked ? "CLASSIFIED" : char.job;
+
+      btn.innerHTML =
+        '<img class="cast-card__img" src="' + raw.poster + '" alt="' + showName + '" loading="lazy" width="300" height="400" />' +
+        '<div class="cast-card__veil"></div>' +
+        (raw.locked && !unlocked
+          ? '<div class="cast-card__lock" aria-hidden="true"><svg viewBox="0 0 64 64" width="36" height="36"><rect x="14" y="28" width="36" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 28v-8a10 10 0 0120 0v8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="32" cy="42" r="3" fill="currentColor"/></svg></div><span class="cast-card__badge">LOCKED</span>'
+          : raw.locked && unlocked
+            ? '<span class="cast-card__badge">UNLOCKED</span>'
+            : "") +
+        '<div class="cast-card__info"><h3 class="cast-card__name">' + showName + '</h3><p class="cast-card__role">' + showJob + "</p></div>";
+
+      btn.addEventListener("click", function () { openModal(raw.id); });
+      castGrid.appendChild(btn);
+    });
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    activeChar = null;
+  }
+
+  function profileHTML(char) {
+    const rows = [
+      ["OCCUPATION", char.job],
+      ["SPEECH", char.speech],
+      ["PROFILE", char.summary],
+      ["APPEARANCE", char.look],
+      ["BACKGROUND", char.bg],
+      ["LIKES", char.like],
+      ["DISLIKES", char.dislike],
+      ["BEHAVIOR", char.habit],
+      ["WHY HERE", char.reason],
+    ];
+    if (char.nick) rows.push(["ADDRESSING", char.nick]);
+
+    return (
+      rows
+        .map(function (pair) {
+          return '<div class="profile-block"><h4>' + pair[0] + "</h4><p>" + pair[1] + "</p></div>";
+        })
+        .join("") +
+      '<blockquote class="profile-quote">' +
+      char.quote +
+      "<cite>" +
+      (char.quoteKo || "") +
+      "</cite></blockquote>"
+    );
+  }
+
+  function openModal(id) {
+    if (!window.UH) return;
+    const raw = UH.characters.find(function (c) { return c.id === id; });
+    if (!raw) return;
+    activeChar = raw;
+    const unlocked = isUnlocked(raw);
+    const char = displayChar(raw);
+
+    const img = $("#modalImg");
+    const lockedEl = $("#modalLocked");
+    const poster = $(".modal__poster");
+    const meta = $("#modalMeta");
+    const name = $("#modalName");
+    const jp = $("#modalJp");
+    const content = $("#modalContent");
+
+    if (img) {
+      img.src = raw.poster;
+      img.alt = unlocked || !raw.locked ? char.name : "비공개 출연자";
+    }
+
+    if (raw.locked && !unlocked) {
+      if (poster) poster.classList.add("is-blurred");
+      if (lockedEl) lockedEl.hidden = false;
+      if (unlockForm) unlockForm.hidden = false;
+      if (unlockInput) unlockInput.value = "";
+      if (unlockErr) unlockErr.hidden = true;
+      if (meta) meta.textContent = "FILE / UH-???? · " + (raw.gender === "f" ? "FEMALE" : "MALE");
+      if (name) name.textContent = "???";
+      if (jp) jp.textContent = "登場禁止 · BEFORE EP.05";
+      if (content) {
+        content.innerHTML =
+          '<div class="profile-block"><h4>STATUS</h4><p>메기 파일. 5화 이전 공개 금지. 비밀번호는 해당 인물의 <strong>한국어 이름</strong>입니다.</p></div>' +
+          '<div class="profile-block"><h4>NOTE</h4><p>' + raw.summary + "</p></div>";
+      }
+    } else {
+      if (poster) poster.classList.remove("is-blurred");
+      if (lockedEl) lockedEl.hidden = true;
+      if (unlockForm) unlockForm.hidden = true;
+      if (meta) {
+        meta.textContent =
+          "FILE / UH-" +
+          String(raw.id).toUpperCase() +
+          " · " +
+          char.age +
+          " · " +
+          (char.height || "—") +
+          " · " +
+          (raw.gender === "f" ? "FEMALE" : "MALE");
+      }
+      if (name) name.textContent = char.name;
+      if (jp) jp.textContent = char.jp;
+      if (content) content.innerHTML = profileHTML(char);
+    }
+
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    const closeBtn = $(".modal__close");
+    if (closeBtn) closeBtn.focus();
+  }
+
+  if (unlockForm) {
+    unlockForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!activeChar || !activeChar.locked) return;
+      const val = (unlockInput && unlockInput.value ? unlockInput.value : "").trim();
+      if (val === activeChar.password) {
+        const set = getUnlocked();
+        set.add(activeChar.id);
+        setUnlocked(set);
+        if (unlockErr) unlockErr.hidden = true;
+        const id = activeChar.id;
+        const active = $(".chip.is-active");
+        const filter = (active && active.dataset.filter) || "all";
+        renderCast(filter);
+        openModal(id);
+      } else {
+        if (unlockErr) unlockErr.hidden = false;
+        if (unlockInput) unlockInput.select();
+      }
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener("click", function (e) {
+      if (e.target.hasAttribute("data-close")) closeModal();
+    });
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && modal && !modal.hidden) closeModal();
+  });
+
+  $$(".chip").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      $$(".chip").forEach(function (c) {
+        c.classList.remove("is-active");
+        c.setAttribute("aria-selected", "false");
+      });
+      chip.classList.add("is-active");
+      chip.setAttribute("aria-selected", "true");
+      renderCast(chip.dataset.filter);
+    });
+  });
+
+  if (muteBtn && bgm) {
+    muteBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      bgm.muted = !bgm.muted;
+      muteBtn.classList.toggle("is-muted", bgm.muted);
+      muteBtn.setAttribute("aria-pressed", String(bgm.muted));
+      muteBtn.setAttribute("aria-label", bgm.muted ? "BGM 켜기" : "BGM 음소거");
+    });
+  }
+
+  if ("requestIdleCallback" in window && window.UH) {
+    requestIdleCallback(function () {
+      UH.characters.forEach(function (c) {
+        const img = new Image();
+        img.src = c.poster;
+      });
+    });
+  }
+})();
+
+  </script>
+</body>
+</html>
